@@ -54,7 +54,7 @@ export function Step({
       </div>
 
       {/* Image goes here */}
-      <div className={`w-2/3 mx-auto ${reverse ? "order-first" : ""}`}>
+      <div className={`w-3/5 mx-auto ${reverse ? "order-first" : ""}`}>
         <img src={imgSrc} alt={alt} className="object-cover" />
       </div>
     </div>
