@@ -1,7 +1,7 @@
 export function FooterSection() {
   return (
     <div className="grid grid-cols-10 mt-48">
-      <div className="col-span-6 pl-28">
+      <div className="col-span-6 pl-12 md:pl-16 xl:pl-28">
         <p className="font-serif text-4xl">MNTN</p>
         <p className="mt-6 w-1/2 2xl:w-1/3">
           Get out there & discover your next slope, mountain & destination!

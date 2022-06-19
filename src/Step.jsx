@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SassyText } from "./SassyText";
 
 export function Step({
@@ -11,6 +11,7 @@ export function Step({
   onStepEnterViewport,
 }) {
   const ref = useRef();
+  const [enter, setEnter] = useState(false);
   const reverse = Number(index) % 2 === 0;
   const applyMarginTop = Number(index) > 1;
 
@@ -20,6 +21,7 @@ export function Step({
         (elements) => {
           if (elements[0].isIntersecting) {
             onStepEnterViewport(Number(index));
+            setEnter(true);
           }
         },
         { threshold: 0.7 }
@@ -30,19 +32,28 @@ export function Step({
   }, [ref]);
 
   return (
-    <div className={`grid grid-cols-2 ${applyMarginTop && "mt-32"}`} ref={ref}>
-      <div>
+    <div
+      className={`grid grid-cols-1 md:grid-cols-2 ${
+        applyMarginTop ? "mt-32" : "mt-0"
+      } 
+        transition-opacity duration-500 ${enter ? "opacity-100" : "opacity-0"}
+      `}
+      ref={ref}
+    >
+      <div className="container">
         <div
-          className={`relative mt-12 ${
-            reverse ? "translate-x-12" : "translate-x-72"
-          } translate-y-20`}
+          className={`relative w-2/3 mx-auto md:mx-0 mt-12 ${
+            reverse
+              ? "translate-x-4 md:translate-x-12"
+              : "translate-x-4 md:translate-x-36 lg:translate-x-56 xl:translate-x-72"
+          } xl:translate-y-20`}
         >
-          <span className="absolute -top-28 -left-28 text-titan opacity-10">
+          <span className="absolute -top-28 -left-20 md:-left-28 text-titan opacity-10">
             {index}
           </span>
-          <div className="w-2/3">
+          <div>
             <SassyText uppercase text={name} />
-            <h3 className="font-serif font-light text-6xl mt-6">
+            <h3 className="font-serif font-light text-5xl lg:text-6xl mt-6">
               {headingText}
             </h3>
             <p className="mt-6">{bodyText}</p>
@@ -54,7 +65,11 @@ export function Step({
       </div>
 
       {/* Image goes here */}
-      <div className={`w-3/5 mx-auto ${reverse ? "order-first" : ""}`}>
+      <div
+        className={`hidden md:block w-3/5 mx-auto ${
+          reverse ? "order-first" : "order-last"
+        }`}
+      >
         <img src={imgSrc} alt={alt} className="object-cover" />
       </div>
     </div>
